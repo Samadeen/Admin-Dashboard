@@ -3,6 +3,8 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { FiSettings } from 'react-icons/fi';
 import { TooltipComponent } from '@syncfusion/ej2-react-popups';
 
+import { useStateContext } from './contexts/ContextProvider';
+
 import { Navbar, Footer, Sidebar, ThemeSettings } from './components';
 import {
   Ecommerce,
@@ -26,8 +28,7 @@ import {
 import './App.css';
 
 const App = () => {
-  const activeMenu = true;
-
+  const { activeMenu } = useStateContext();
   return (
     <div>
       <BrowserRouter>
@@ -36,7 +37,7 @@ const App = () => {
             <TooltipComponent content='Settings' position='Top'>
               <button
                 type='button'
-                className='text-7xl text-white p-3 hover:drop-shadow-xl hover:bg-light-gray'
+                className='text-3xl text-white p-3 hover:drop-shadow-xl hover:bg-light-gray'
                 style={{ background: 'yellow', borderRadius: '50%' }}
               >
                 <FiSettings />
@@ -45,10 +46,12 @@ const App = () => {
           </div>
           {activeMenu ? (
             <div className='w-72 fixed sidebar dark:bg-secondary-dark-bg bg-white '>
-              <Sidebar/>
+              <Sidebar />
             </div>
           ) : (
-            <div className='w-0 dark:bg-secondary-dark-bg'><Sidebar/></div>
+            <div className='w-0 dark:bg-secondary-dark-bg'>
+              <Sidebar />
+            </div>
           )}
           <div
             className={
@@ -57,13 +60,9 @@ const App = () => {
                 : 'bg-main-bg dark:bg-main-dark-bg  w-full min-h-screen flex-2 '
             }
           >
-            <div
-              className={
-                activeMenu
-                  ? 'dark:bg-main-dark-bg  bg-main-bg min-h-screen md:ml-72 w-full  '
-                  : 'bg-main-bg dark:bg-main-dark-bg  w-full min-h-screen flex-2 '
-              }
-            ></div>
+            <div className='fixed md:static bg-main-bg dark:bg-main-dark-bg navbar w-full '>
+              <Navbar />
+            </div>
           </div>
           <div>
             <Routes>
